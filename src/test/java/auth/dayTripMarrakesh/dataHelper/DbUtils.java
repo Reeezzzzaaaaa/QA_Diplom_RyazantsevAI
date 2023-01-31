@@ -5,8 +5,7 @@ import lombok.var;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.*;
 
 public class DbUtils {
 
@@ -14,7 +13,7 @@ public class DbUtils {
 
     @SneakyThrows
     private static Connection getConn() {
-        return DriverManager.getConnection(System.getProperty("db.url"), "user", "password");
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/app", "app", "pass");
     }
 
     @SneakyThrows
@@ -28,15 +27,17 @@ public class DbUtils {
             runner.execute(conn, payment);
         }
     }
+//NullPointerException
 
     @SneakyThrows
-    public String getVerificationCode() {
-        var codeSQL = "SELECT code FROM auth_codes ORDER BY created DESC LIMIT 1;";
+    public String getStatusEntity() {
+        var statusSQL = "SELECT status FROM credit_request_entity ORDER BY created DESC LIMIT 1;";
         var runner = new QueryRunner();
+        String status;
 
         try (var conn = getConn()) {
-            var code = runner.query(conn, codeSQL, new ScalarHandler<String>());
-            return String.valueOf(Integer.parseInt(code));
+            status = runner.query(conn, statusSQL, new ScalarHandler<String>());
+            return status;
         }
     }
 }

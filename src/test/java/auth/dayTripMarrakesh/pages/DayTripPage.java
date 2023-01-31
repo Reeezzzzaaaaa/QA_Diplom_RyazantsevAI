@@ -8,20 +8,16 @@ import static com.codeborne.selenide.Selenide.$x;
 
 public class DayTripPage {
 
-    private final SelenideElement buyTrip = $x("//*[@class='button button_size_m button_theme_alfa-on-white']");
-    private final SelenideElement buyCreditTrip = $x("//*[@type='button']//*[contains(text(), 'Купить в кредит')]");
-    private final SelenideElement textAfterBuyTrip = $x("//*[contains(text(), 'Оплата по карте')]");
-    private final SelenideElement textAfterBuyCreditTrip = $x("//*[contains(text(), 'Кредит по данным карты')]");
+    private final SelenideElement buyTrip = $x("//*[@class='App_appContainer__3jRx1']/button[1]");
+    private final SelenideElement buyCreditTrip = $x("//*[@class='App_appContainer__3jRx1']/button[2]");
 
     public DayTripPage cardPayment() {
         buyTrip.click();
-        //textAfterBuyTrip.shouldBe(visible);
         return new DayTripPage();
     }
 
     public DayTripPage creditPayment() {
         buyCreditTrip.click();
-        //textAfterBuyCreditTrip.shouldBe(visible);
         return new DayTripPage();
     }
 }

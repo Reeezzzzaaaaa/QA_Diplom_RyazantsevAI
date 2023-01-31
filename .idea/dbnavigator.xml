@@ -29,9 +29,16 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="f73ccab2-3a41-4747-93a5-ca365c342c39">
-      <console name="mySQL" type="STANDARD" schema="app" session="Main"><![CDATA[DELETE FROM app.order_entity
+      <console name="mySQL" type="STANDARD" schema="app" session="Main"><![CDATA[DELETE FROM order_entity
 DELETE FROM credit_request_entity
-DELETE FROM payment_entity]]></console>
+DELETE FROM payment_entity
+SELECT * FROM credit_request_entity
+SELECT * FROM order_entity
+SELECT * FROM payment_entity
+
+SELECT status FROM payment_entity
+SELECT status FROM credit_request_entity
+SELECT status FROM credit_request_entity ORDER BY created DESC LIMIT 1]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
@@ -93,7 +100,7 @@ DELETE FROM payment_entity]]></console>
           <deprecated-pwd value="cGFzcw==" />
         </database>
         <properties>
-          <auto-commit value="false" />
+          <auto-commit value="true" />
         </properties>
         <ssh-settings>
           <active value="false" />
