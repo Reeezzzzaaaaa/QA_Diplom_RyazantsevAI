@@ -3,13 +3,12 @@ package auth.dayTripMarrakesh.dataHelper;
 import com.github.javafaker.Faker;
 import lombok.Value;
 
-import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class DataHelper {
 
-    private static Faker faker = new Faker(new Locale("en"));
+    private static final Faker faker = new Faker(new Locale("en"));
 
     DataHelper() {
     }
@@ -34,13 +33,21 @@ public class DataHelper {
         return new CardNumber("");
     }
 
-    public static EndOfActionCardMonth get13Month() {return new EndOfActionCardMonth("13");}
+    public static EndOfActionCardMonth get13Month() {
+        return new EndOfActionCardMonth("13");
+    }
 
-    public static EndOfActionCardMonth getWithOutZeroBeforeMonth() {return new EndOfActionCardMonth("7");}
+    public static EndOfActionCardMonth getWithOutZeroBeforeMonth() {
+        return new EndOfActionCardMonth("7");
+    }
 
-    public static EndOfActionCardMonth get00Month() {return new EndOfActionCardMonth("00");}
+    public static EndOfActionCardMonth get00Month() {
+        return new EndOfActionCardMonth("00");
+    }
 
-    public static EndOfActionCardMonth getEmptyMonth() {return new EndOfActionCardMonth("");}
+    public static EndOfActionCardMonth getEmptyMonth() {
+        return new EndOfActionCardMonth("");
+    }
 
     public static EndOfActionCardYear get27Year() {
         return new EndOfActionCardYear("27");
@@ -85,7 +92,7 @@ public class DataHelper {
         int currentYear = calendar.get(Calendar.YEAR)-2000;
 
         if ( year <= currentYear ) {
-            year = currentYear + 1;
+            year = currentYear+1;
         }
         return new EndOfActionCardYear(String.valueOf(year));
     }
@@ -119,6 +126,14 @@ public class DataHelper {
         return new OwnerCard("Петров");
     }
 
+    public static OwnerCard getOtherSymbolsOwnerCard() {
+        return new OwnerCard("РџР#µС‚С?ЂРѕРІ&");
+    }
+
+    public static OwnerCard getNumericalOwnerCard() {
+        return new OwnerCard(faker.numerify("#############"));
+    }
+
     public static CVCCodeCard getValidCVCCode() {
         return new CVCCodeCard(faker.numerify("###"));
     }
@@ -133,7 +148,8 @@ public class DataHelper {
 
     public static StatusEntity getStatus() {
         DbUtils dbUtils = new DbUtils();
-        return new StatusEntity(dbUtils.getStatusEntity());}
+        return new StatusEntity(dbUtils.getStatusEntity());
+    }
 
     public static StatusEntity getApprovedStatus() {
         return new StatusEntity("APPROVED");
@@ -145,31 +161,31 @@ public class DataHelper {
 
     @Value
     public static class CardNumber {
-        private String number;
+        String number;
     }
 
     @Value
     public static class EndOfActionCardMonth {
-        private String month;
+        String month;
     }
 
     @Value
     public static class EndOfActionCardYear {
-        private String year;
+        String year;
     }
 
     @Value
     public static class OwnerCard {
-        private String owner;
+        String owner;
     }
 
     @Value
     public static class CVCCodeCard {
-        private String cvcCode;
+        String cvcCode;
     }
 
     @Value
     public static class StatusEntity {
-        private String status;
+        String status;
     }
 }

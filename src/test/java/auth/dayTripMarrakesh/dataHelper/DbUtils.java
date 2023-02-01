@@ -1,7 +1,6 @@
 package auth.dayTripMarrakesh.dataHelper;
 
 import lombok.SneakyThrows;
-import lombok.var;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
@@ -9,7 +8,7 @@ import java.sql.*;
 
 public class DbUtils {
 
-    private static QueryRunner runner = new QueryRunner();
+    private static final QueryRunner runner = new QueryRunner();
 
     @SneakyThrows
     private static Connection getConn() {
@@ -27,7 +26,6 @@ public class DbUtils {
             runner.execute(conn, payment);
         }
     }
-//NullPointerException
 
     @SneakyThrows
     public String getStatusEntity() {
@@ -36,7 +34,7 @@ public class DbUtils {
         String status;
 
         try (var conn = getConn()) {
-            status = runner.query(conn, statusSQL, new ScalarHandler<String>());
+            status = runner.query(conn, statusSQL, new ScalarHandler<>());
             return status;
         }
     }

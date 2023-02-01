@@ -4,28 +4,35 @@ import auth.dayTripMarrakesh.dataHelper.DataHelper;
 import auth.dayTripMarrakesh.pages.DayTripPage;
 import auth.dayTripMarrakesh.pages.PaymentGatePage;
 import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.sql.SQLException;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.*;
 
 import static auth.dayTripMarrakesh.dataHelper.DbUtils.cleanDB;
 import static com.codeborne.selenide.Selenide.open;
 
 public class PaymentGateTests {
 
-        @BeforeEach
-        void openPage() {
-            Configuration.holdBrowserOpen = true;
-            open("http://localhost:8080/");
-        }
+    @BeforeAll
+    static void setUpAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
 
-//    @AfterAll
-//    public static void tearDown() throws SQLException {
-//        cleanDB();
-//    }
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
+    }
+
+    @BeforeEach
+    void openPage() {
+        Configuration.holdBrowserOpen = true;
+        open("http://localhost:8080/");
+    }
+
+    @AfterEach
+    public void tearDown() {
+        cleanDB();
+    }
 
     @Test
     void shouldSuccessByDayTripFromFirstCardTest() {
@@ -119,7 +126,7 @@ public class PaymentGateTests {
     }
 
     @Test
-    void shouldUnSuccessByDayTripWithEndOfActionCard00MonthTest99999999999999999999999999999999999999999999() {
+    void shouldUnSuccessByDayTripWithEndOfActionCard00MonthTest() {
 
         DayTripPage chooseMethod = new DayTripPage();
         chooseMethod.cardPayment();
@@ -171,7 +178,7 @@ public class PaymentGateTests {
     }
 
     @Test
-    void shouldSuccessByDayTripWithEndOfActionCard2029YearTest9999999999999999999999999999999999999999999999999() {
+    void shouldSuccessByDayTripWithEndOfActionCard2029YearTest() {
 
         DayTripPage chooseMethod = new DayTripPage();
         chooseMethod.cardPayment();
@@ -223,7 +230,7 @@ public class PaymentGateTests {
     }
 
     @Test
-    void shouldUnSuccessByDayTripWithOneSymbolOwnerTest99999999999999999999999999999999999999999() {
+    void shouldUnSuccessByDayTripWithOneSymbolOwnerTest() {
 
         DayTripPage chooseMethod = new DayTripPage();
         chooseMethod.cardPayment();
@@ -236,7 +243,7 @@ public class PaymentGateTests {
     }
 
     @Test
-    void shouldUnSuccessByDayTripWithCyrillicOwnerTest9999999999999999999999999999999999999() {
+    void shouldUnSuccessByDayTripWithCyrillicOwnerTest() {
 
         DayTripPage chooseMethod = new DayTripPage();
         chooseMethod.cardPayment();
@@ -244,6 +251,32 @@ public class PaymentGateTests {
         purchase.numberCard(DataHelper.getFirstCard());
         purchase.EndOfActionDateCard(DataHelper.getEndOfActionCardMonth(), DataHelper.getValidEndOfActionCardYear());
         purchase.dataCard(DataHelper.getCyrillicOwnerCard(), DataHelper.getValidCVCCode());
+        purchase.postData();
+        purchase.wrongFieldOwner();
+    }
+
+    @Test
+    void shouldUnSuccessByDayTripWithOtherSymbolsOwnerTest() {
+
+        DayTripPage chooseMethod = new DayTripPage();
+        chooseMethod.cardPayment();
+        PaymentGatePage purchase = new PaymentGatePage();
+        purchase.numberCard(DataHelper.getFirstCard());
+        purchase.EndOfActionDateCard(DataHelper.getEndOfActionCardMonth(), DataHelper.getValidEndOfActionCardYear());
+        purchase.dataCard(DataHelper.getOtherSymbolsOwnerCard(), DataHelper.getValidCVCCode());
+        purchase.postData();
+        purchase.wrongFieldOwner();
+    }
+
+    @Test
+    void shouldUnSuccessByDayTripWithNumericalOwnerTest() {
+
+        DayTripPage chooseMethod = new DayTripPage();
+        chooseMethod.cardPayment();
+        PaymentGatePage purchase = new PaymentGatePage();
+        purchase.numberCard(DataHelper.getFirstCard());
+        purchase.EndOfActionDateCard(DataHelper.getEndOfActionCardMonth(), DataHelper.getValidEndOfActionCardYear());
+        purchase.dataCard(DataHelper.getNumericalOwnerCard(), DataHelper.getValidCVCCode());
         purchase.postData();
         purchase.wrongFieldOwner();
     }
@@ -262,7 +295,7 @@ public class PaymentGateTests {
     }
 
     @Test
-    void shouldUnSuccessByDayTripWithEmptyFieldCVCCodeTest99999999999999999999999999999999999999999999999999() {
+    void shouldUnSuccessByDayTripWithEmptyFieldCVCCodeTest() {
 
         DayTripPage chooseMethod = new DayTripPage();
         chooseMethod.cardPayment();

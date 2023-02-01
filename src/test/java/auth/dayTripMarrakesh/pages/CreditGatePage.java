@@ -26,70 +26,70 @@ public class CreditGatePage {
     private final SelenideElement successNotification = $x("//*[@id='root']/div/div[2]");
     private final SelenideElement UnSuccessNotification = $x("//*[@id='root']/div/div[3]");
 
-    public CreditGatePage numberCard(DataHelper.CardNumber card) {
+    public void numberCard(DataHelper.CardNumber card) {
         inputNumberCard.sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
         inputNumberCard.setValue(String.valueOf(card));
-        return new CreditGatePage();
+        new CreditGatePage();
     }
 
-    public CreditGatePage EndOfActionDateCard(DataHelper.EndOfActionCardMonth month, DataHelper.EndOfActionCardYear year) {
+    public void EndOfActionDateCard(DataHelper.EndOfActionCardMonth month, DataHelper.EndOfActionCardYear year) {
         inputMonthCard.sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
         inputMonthCard.setValue(String.valueOf(month.getMonth()));
         inputYearCard.sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
         inputYearCard.setValue(String.valueOf(year));
-        return new CreditGatePage();
+        new CreditGatePage();
     }
 
-    public CreditGatePage dataCard(DataHelper.OwnerCard owner, DataHelper.CVCCodeCard cvc) {
+    public void dataCard(DataHelper.OwnerCard owner, DataHelper.CVCCodeCard cvc) {
         inputOwnerCard.sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
         inputOwnerCard.setValue(owner.getOwner());
         inputCVCCard.sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
         inputCVCCard.setValue(cvc.getCvcCode());
-        return new CreditGatePage();
+        new CreditGatePage();
     }
 
-    public CreditGatePage postData() {
+    public void postData() {
         nextMove.click();
-        return new CreditGatePage();
+        new CreditGatePage();
     }
 
-    public CreditGatePage successNotification() {
+    public void successNotification() {
         successNotification.shouldBe(visible, Duration.ofSeconds(15));
-        return new CreditGatePage();
+        new CreditGatePage();
     }
 
-    public CreditGatePage unSuccessNotification() {
+    public void unSuccessNotification() {
         UnSuccessNotification.shouldBe(visible, Duration.ofSeconds(15));
-        return new CreditGatePage();
+        new CreditGatePage();
     }
 
-    public CreditGatePage wrongFieldNumberCard() {
+    public void wrongFieldNumberCard() {
         inputWrongNumberCard.shouldBe(visible);
-        return new CreditGatePage();
+        new CreditGatePage();
     }
 
-    public CreditGatePage wrongFieldMonth() {
+    public void wrongFieldMonth() {
         inputWrongMonthCard.shouldBe(visible);
-        return new CreditGatePage();
+        new CreditGatePage();
     }
 
-    public CreditGatePage wrongFieldYear() {
+    public void wrongFieldYear() {
         inputWrongYearCard.shouldBe(visible);
-        return new CreditGatePage();
+        new CreditGatePage();
     }
 
-    public CreditGatePage wrongFieldOwner() {
+    public void wrongFieldOwner() {
         inputWrongOwnerCard.shouldBe(visible);
-        return new CreditGatePage();
+        new CreditGatePage();
     }
 
-    public CreditGatePage wrongFieldOwnerNotBeVisible() {
+    public void wrongFieldOwnerNotBeVisible() {
         inputWrongOwnerCard.shouldNotBe(visible);
-        return new CreditGatePage();
+        new CreditGatePage();
     }
 
-    public CreditGatePage wrongFieldCVCCode() {
+    public void wrongFieldCVCCode() {
         inputWrongCVCCard.shouldBe(visible);
-        return new CreditGatePage();
+        new CreditGatePage();
     }
 }
