@@ -10,6 +10,7 @@ import org.junit.jupiter.api.*;
 
 import static auth.dayTripMarrakesh.dataHelper.DbUtils.cleanDB;
 import static com.codeborne.selenide.Selenide.open;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PaymentGateTests {
 
@@ -58,6 +59,20 @@ public class PaymentGateTests {
         purchase.dataCard(DataHelper.getOwnerCard(), DataHelper.getValidCVCCode());
         purchase.postData();
         purchase.successNotification();
+    }
+
+    @Test
+    void shouldSuccessByDayTripFromFirstCardTrueAmountColumnTest() {
+
+        DayTripPage chooseMethod = new DayTripPage();
+        chooseMethod.cardPayment();
+        PaymentGatePage purchase = new PaymentGatePage();
+        purchase.numberCard(DataHelper.getFirstCard());
+        purchase.EndOfActionDateCard(DataHelper.getEndOfActionCardMonth(), DataHelper.getValidEndOfActionCardYear());
+        purchase.dataCard(DataHelper.getOwnerCard(), DataHelper.getValidCVCCode());
+        purchase.postData();
+        assertEquals(DataHelper.getAmount(), DataHelper.getActualAmount());
+
     }
 
     @Test

@@ -159,6 +159,15 @@ public class DataHelper {
         return new StatusEntity("DECLINED");
     }
 
+    public static AmountEntity getActualAmount() {
+        DbUtils dbUtils = new DbUtils();
+        return new AmountEntity(dbUtils.getAmountEntity());
+    }
+
+    public static AmountEntity getAmount() {
+        return new AmountEntity("45000");
+    }
+
     @Value
     public static class CardNumber {
         String number;
@@ -187,5 +196,10 @@ public class DataHelper {
     @Value
     public static class StatusEntity {
         String status;
+    }
+
+    @Value
+    public static class AmountEntity {
+        String amount;
     }
 }

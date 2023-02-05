@@ -12,7 +12,7 @@ public class DbUtils {
 
     @SneakyThrows
     private static Connection getConn() {
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/app", "app", "pass");
+        return DriverManager.getConnection(System.getProperty("db.url"), "app", "pass");
     }
 
     @SneakyThrows
@@ -31,11 +31,21 @@ public class DbUtils {
     public String getStatusEntity() {
         var statusSQL = "SELECT status FROM credit_request_entity ORDER BY created DESC LIMIT 1;";
         var runner = new QueryRunner();
-        String status;
 
         try (var conn = getConn()) {
-            status = runner.query(conn, statusSQL, new ScalarHandler<>());
-            return status;
+            var status = runner.query(conn, statusSQL, new ScalarHandler<>());
+            return (String) status;
+        }
+    }
+
+    @SneakyThrows
+    public String getAmountEntity() {
+        var amountSQL = "SELECT amount FROM payment_entity ORDER BY created DESC LIMIT 1;";
+        var runner = new QueryRunner();
+
+        try (var conn = getConn()) {
+            var amount = runner.query(conn, amountSQL, new ScalarHandler<>());
+            return (String) amount;
         }
     }
 }
